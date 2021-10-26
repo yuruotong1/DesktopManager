@@ -1,0 +1,13 @@
+targetBaseDir: D:\BaiduNetdiskWorkspace
+sourceBaseDir: null
+rule:
+  - dirName: picture
+    regular:
+      - .*\.jpg$
+      - .*\.png$
+  - dirName: vedio
+    regular:
+      - .*\.mp4$
+
+excludeRules:
+  - ^BaiduNetdiskWorkspace.*
