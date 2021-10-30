@@ -1,3 +1,4 @@
+//: DeskManager.java
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.yaml.snakeyaml.Yaml;
@@ -8,6 +9,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 
+/** 入口类
+ * 桌面整理工具，可以一键将文件按规则分类放置
+ * @author 年叶
+ * @version 1.0
+ * */
 public class DeskManager {
     String targetBaseDir;
     String sourceBaseDir = DirUtils.DesktopPath();
@@ -17,18 +23,19 @@ public class DeskManager {
 
     public DeskManager() {
         loadFromYaml();
-
     }
 
-    private String getDirNameByRule(String fileName) {
-        /*
-        检测 file 是否命中某个 rule 规则，若命中返回其所属目录
-        比如 a.png 会命中 .*\.png$，返回 img
-        subDir: img
-        regualr:
-          - .*\.jpg$
-          - .*\.png$
-         */
+    /** <p>检测 file 是否命中某个 rule 规则，若命中返回其所属目录
+     * <p>比如 a.png 会命中 .*\.png$，返回 img，配置内容如下：
+     * <p><pre class="code">
+     * subDir: img
+     * regualr:
+     * - .*\.jpg$
+     * - .*\.png$
+     * </pre>
+     * @param fileName 文件名
+     * */
+    public String getDirNameByRule(String fileName) {
 
         for (Object ruleObject : classifyRules) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -45,7 +52,9 @@ public class DeskManager {
         return null;
     }
 
-    //判断是否命中了黑名单
+    /** 判断文件名是否命中了黑名单（excludeRules）
+     * @param fileName 文件名
+     */
     public boolean isHitExcluedeRules(String fileName) {
         for (Object excludeRule : excludeRules) {
             if (Pattern.matches((String) excludeRule, fileName))
@@ -54,9 +63,9 @@ public class DeskManager {
         return false;
 
     }
-
+    /** 检查每一个文件（目录），根据配置文件中的 rule 规则进行分类放置
+     * */
     public void DesktopFiles() {
-        // 检查每一个文件（目录），根据配置文件中的 rule 规则进行分类放置
         File[] files = new File(sourceBaseDir).listFiles();
         if (files == null) return;
         for (File file : files) {
@@ -71,6 +80,7 @@ public class DeskManager {
         }
     }
 
+    /** 从 config.yaml 中加载初始配置文件 */
     public void loadFromYaml() {
         Yaml yaml = new Yaml();
         Map<String, Object> data = yaml.load(this.getClass().getClassLoader().getResourceAsStream("config.yaml"));
