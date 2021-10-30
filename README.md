@@ -54,3 +54,6 @@ rule:
 excludeRules:
   - ^BaiduNetdiskWorkspace.*
 ```
+
+## todo
+- 删除长时间未使用的文件和空目录，删除时给予提示

@@ -26,7 +26,35 @@
         </dependency>
 
 
-
     </dependencies>
+    <build>
+        <plugins>
+            <!-- 其他的一些plugin... -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!--这里改成你主类的全限定名称-->
+                            <mainClass>DeskManager</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <!--在执行package动作的时候，自动打包-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 其他的一些plugin... -->
+        </plugins>
+    </build>
 
 </project>

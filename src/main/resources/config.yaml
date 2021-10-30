@@ -8,6 +8,13 @@ rule:
   - dirName: vedio
     regular:
       - .*\.mp4$
+  - dirName: pdf
+    regular:
+      - .*\.pdf$
+  - dirName: ppt
+    regular:
+      - .*\.pptx
+
 
 excludeRules:
   - ^BaiduNetdiskWorkspace.*
