@@ -36,7 +36,7 @@
                     <archive>
                         <manifest>
                             <!--这里改成你主类的全限定名称-->
-                            <mainClass>DeskManager</mainClass>
+                            <mainClass>com.deskmanager.dongle.DeskManager</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -56,5 +56,12 @@
             <!-- 其他的一些plugin... -->
         </plugins>
     </build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <encoding>UTF-8</encoding>
+        <java.version>13</java.version>
+        <maven.compiler.source>13</maven.compiler.source>
+        <maven.compiler.target>13</maven.compiler.target>
+    </properties>
 
 </project>

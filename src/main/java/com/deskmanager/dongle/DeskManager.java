@@ -1,4 +1,5 @@
-//: DeskManager.java
+//: com.deskmanager.dongle.DeskManager.java
+package com.deskmanager.dongle;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.yaml.snakeyaml.Yaml;
@@ -9,11 +10,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 
-/** 入口类
+/**
  * 桌面整理工具，可以一键将文件按规则分类放置
  * @author 年叶
  * @version 1.0
- * */
+ */
 public class DeskManager {
     String targetBaseDir;
     String sourceBaseDir = DirUtils.DesktopPath();
@@ -25,16 +26,18 @@ public class DeskManager {
         loadFromYaml();
     }
 
-    /** <p>检测 file 是否命中某个 rule 规则，若命中返回其所属目录
+    /**
+     * <p>检测 file 是否命中某个 rule 规则，若命中返回其所属目录
      * <p>比如 a.png 会命中 .*\.png$，返回 img，配置内容如下：
-     * <p><pre class="code">
+     * <pre class="code">
      * subDir: img
      * regualr:
      * - .*\.jpg$
      * - .*\.png$
      * </pre>
      * @param fileName 文件名
-     * */
+     * @return 该文件该应存放的目录
+     */
     public String getDirNameByRule(String fileName) {
 
         for (Object ruleObject : classifyRules) {
@@ -52,8 +55,10 @@ public class DeskManager {
         return null;
     }
 
-    /** 判断文件名是否命中了黑名单（excludeRules）
+    /**
+     * 判断文件名是否命中了黑名单（excludeRules）
      * @param fileName 文件名
+     * @return 是否不应该遍历
      */
     public boolean isHitExcluedeRules(String fileName) {
         for (Object excludeRule : excludeRules) {
@@ -63,8 +68,9 @@ public class DeskManager {
         return false;
 
     }
-    /** 检查每一个文件（目录），根据配置文件中的 rule 规则进行分类放置
-     * */
+    /**
+     * 检查每一个文件（目录），根据配置文件中的 rule 规则进行分类放置
+     */
     public void DesktopFiles() {
         File[] files = new File(sourceBaseDir).listFiles();
         if (files == null) return;
@@ -80,7 +86,9 @@ public class DeskManager {
         }
     }
 
-    /** 从 config.yaml 中加载初始配置文件 */
+    /**
+     * 从 config.yaml 中加载初始配置文件
+     */
     public void loadFromYaml() {
         Yaml yaml = new Yaml();
         Map<String, Object> data = yaml.load(this.getClass().getClassLoader().getResourceAsStream("config.yaml"));
